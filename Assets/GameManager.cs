@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -10,18 +11,22 @@ public class GameManager : MonoBehaviour {
 	public float beatInterval = 0;  //number storing 60 / bpm, set after bpm is read in
 	public float currentBeat = 0; //current beat the song is on
 	PriorityQueue<float, string> beatMapPQueue;
-	//input manager link
 	//Player 1 Link?
 	//Player 2 Link?
 	//Judge Link?
 	//Link to background image for p1
 	//link to background image for p2
 	//victory state
+	public GameObject P1Spawner;
+	public GameObject P2Spawner;
 
 	// Use this for initialization
 	void Start () {
 		beatMapPQueue = new PriorityQueue<float, string>();
 		ReadBeatMap();
+		P1Spawner = GameObject.Find ("Player1Spawner");
+		P2Spawner = GameObject.Find ("Player2Spawner");
+		//start counting beats?
 		song = GetComponent<AudioSource>();
 		song.Play ();
 	}
@@ -30,6 +35,23 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		//increment current beat or something
 		//generate arrows depending on stuff in pQueue
+		if (!beatMapPQueue.IsEmpty)
+		{
+			string[] arrows = beatMapPQueue.Dequeue().Split(' ');
+			for (int i = 0; i < arrows.Length; i++)
+			{
+				foreach (Transform child in P1Spawner.transform)
+				{
+					if (arrows[i] == child.name)
+						Instantiate(Resources.Load(child.name), child.position, child.rotation);
+				}
+				foreach (Transform child in P2Spawner.transform)
+				{
+					if (arrows[i] == child.name)
+						Instantiate(Resources.Load(child.name), child.position, child.rotation);
+				}
+			}
+		}
 		//how to check if game is over?
 		if (!song.isPlaying)
 		{
@@ -94,6 +116,8 @@ public class GameManager : MonoBehaviour {
 				string arrows = "";
 				for (int i = 1; i < entries.Length; i++) {
 					arrows += entries[i];
+					if (i < entries.Length-1)
+						arrows += " ";
 				}
 				//value here is the combination of arrows to be spawned, with the priority as the beat
 				beatMapPQueue.Enqueue(arrows, float.Parse(entries[0]) * beatInterval);
