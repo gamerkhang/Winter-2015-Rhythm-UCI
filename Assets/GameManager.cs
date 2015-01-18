@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		beatMapPQueue = new PriorityQueue<float, string>();
 		ReadBeatMap();
-		Debug.Log (beatMapPQueue.Dequeue());
 		song = GetComponent<AudioSource>();
 		song.Play ();
 	}
@@ -41,10 +40,9 @@ public class GameManager : MonoBehaviour {
 	void ReadBeatMap() {
 		try
 		{
-			string line;
 			// Create a new StreamReader, tell it which file to read and what encoding the file
 			// was saved as
-			StreamReader theReader = new StreamReader(Application.dataPath + "/" + TestApplicationModel.beatMap, Encoding.Default);
+			StreamReader theReader = new StreamReader(Application.dataPath + "/BeatMaps/" + TestApplicationModel.beatMap, Encoding.Default);
 			
 			// Immediately clean up the reader after this block of code is done.
 			// You generally use the "using" statement for potentially memory-intensive objects
@@ -54,17 +52,16 @@ public class GameManager : MonoBehaviour {
 			using (theReader)
 			{
 				// While there's lines left in the text file, do this:
+				string line;
 				do
 				{
 					line = theReader.ReadLine();
-					
 					if (line != null)
 					{
 						// Do whatever you need to do with the text line, it's a string now
 						// In this example, I split it into arguments based on comma
 						// deliniators, then send that array to ReadLine()
 						string[] entries = line.Split(' ');
-						Debug.Log (entries.ToString());
 						if (entries.Length > 0)
 							ParseBeatMapLine(entries);
 					}
@@ -87,7 +84,9 @@ public class GameManager : MonoBehaviour {
 	void ParseBeatMapLine(string[] entries) {
 		//If it's a BPM specifying line it'll immediately set the beat interval based off of BPM 
 		if (entries[0] == "BPM")
+		{
 			beatInterval = 60 / float.Parse (entries[1]);
+		}
 		//Else it's probably a line for arrow entries
 		else {
 			try
@@ -98,7 +97,6 @@ public class GameManager : MonoBehaviour {
 				}
 				//value here is the combination of arrows to be spawned, with the priority as the beat
 				beatMapPQueue.Enqueue(arrows, float.Parse(entries[0]) * beatInterval);
-				Debug.Log(beatMapPQueue.ToString());
 			}
 			catch (System.Exception e)
 			{
