@@ -5,7 +5,7 @@ public class ApplicationModel : MonoBehaviour {
 
 	static public int P1Char = 0;
 	static public int P2Char = 1;
-	//song file to load
+	static public string song = "";
 	//beat map file to load
 //	// Use this for initialization
 //	void Start () {
