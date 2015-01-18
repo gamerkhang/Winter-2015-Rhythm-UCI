@@ -11,28 +11,37 @@ public class UpArrowScript : MonoBehaviour {
 	public Transform mSweetSpot;
 	public Transform oSweetSpot;
 	public bool isPlayer1;
+	public float distance;
 	public LandingScript land;
 	// Use this for initialization
 	void Start () {
+		
+	}
+	public void initialize(float sTime, float eTime, bool isPlayer)
+	{
+		startTime = sTime;
+		endTime = eTime;
+		isPlayer1 = isPlayer;
 		GameObject temp;
 		if(isPlayer1)
 		{
 			temp = GameObject.Find ("LandingPads");
-			landing = GameObject.Find("UpArrowLanding");
+			landing = GameObject.Find("DownArrowLanding");
 		}else
 		{
 			temp = GameObject.Find ("LandingPads2");
-			landing = GameObject.Find("UpArrowLanding2");
+			landing = GameObject.Find("DownArrowLanding2");
 		}
 		land = temp.GetComponent<LandingScript>();
 		mSweetSpot = transform.Find("SweetSpot");
 		oSweetSpot = landing.transform.Find("SweetSpot");
-		float distance =  landing.transform.position.y - transform.position.y ;
-		Debug.Log (distance);
-		Debug.Log (endTime);
-		mVelocity = distance/(endTime - 0);
+		distance =  landing.transform.position.y - transform.position.y ;
+//		Debug.Log (distance);
+//		Debug.Log (endTime);
+		mVelocity = distance/(endTime - startTime);
 		transform.rigidbody2D.velocity = new Vector2(0f,mVelocity);
 	}
+
 	
 	// Update is called once per frame
 	void Update () {
