@@ -11,9 +11,17 @@ public class DownArrowScript : MonoBehaviour {
 	public Transform mSweetSpot;
 	public Transform oSweetSpot;
 	public bool isPlayer1;
+	public float distance;
 	public LandingScript land;
 	// Use this for initialization
 	void Start () {
+
+	}
+	public void initialize(float sTime, float eTime, bool isPlayer)
+	{
+		startTime = sTime;
+		endTime = eTime;
+		isPlayer1 = isPlayer;
 		GameObject temp;
 		if(isPlayer1)
 		{
@@ -27,13 +35,14 @@ public class DownArrowScript : MonoBehaviour {
 		land = temp.GetComponent<LandingScript>();
 		mSweetSpot = transform.Find("SweetSpot");
 		oSweetSpot = landing.transform.Find("SweetSpot");
-		float distance =  landing.transform.position.y - transform.position.y ;
-		Debug.Log (distance);
-		Debug.Log (endTime);
-	mVelocity = distance/(endTime - 0);
-	transform.rigidbody2D.velocity = new Vector2(0f,mVelocity);
+		distance =  landing.transform.position.y - transform.position.y ;
+//		Debug.Log (distance);
+//		Debug.Log (endTime);
+		mVelocity = distance/(endTime - startTime);
+		transform.rigidbody2D.velocity = new Vector2(0f,mVelocity);
 	}
-	
+
+
 	// Update is called once per frame
 	void Update () {
 		if(isActive)

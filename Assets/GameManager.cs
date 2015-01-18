@@ -9,7 +9,9 @@ public class GameManager : MonoBehaviour {
 	//   still has to be links to access the instances in the gameobject
 	public AudioSource song;
 	public float beatInterval = 0;  //number storing 60 / bpm, set after bpm is read in
-	public float currentBeat = 0; //current beat the song is on
+	public float startTime = 0;
+	public float currentTime = 0; //current beat the song is on
+	public float arrowSpawnDelay = 1f;
 	PriorityQueue<float, string> beatMapPQueue;
 	//Player 1 Link?
 	//Player 2 Link?
@@ -29,28 +31,77 @@ public class GameManager : MonoBehaviour {
 		//start counting beats?
 		song = GetComponent<AudioSource>();
 		song.Play ();
+		startTime = Time.time;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//increment current beat or something
+		currentTime = Time.time - startTime;
 		//generate arrows depending on stuff in pQueue
-		if (!beatMapPQueue.IsEmpty)
+		while (currentTime >= (beatMapPQueue.priorityPeek() - arrowSpawnDelay) && !beatMapPQueue.IsEmpty)
 		{
+			float eTime = beatMapPQueue.priorityPeek();
+			Debug.Log("GAMEMANSTART: " + (beatMapPQueue.priorityPeek() - arrowSpawnDelay));
+			Debug.Log("GAMEMANEnd: " + eTime);
 			string[] arrows = beatMapPQueue.Dequeue().Split(' ');
 			for (int i = 0; i < arrows.Length; i++)
 			{
 				foreach (Transform child in P1Spawner.transform)
 				{
 					if (arrows[i] == child.name)
-						Instantiate(Resources.Load(child.name), child.position, child.rotation);
+					{
+						GameObject temp = (GameObject)Instantiate(Resources.Load(child.name), child.position, child.rotation);
+						if (arrows[i] == "DOWN")
+						{
+							DownArrowScript temp1 = temp.GetComponent<DownArrowScript>();
+							temp1.initialize(currentTime, eTime, true); 
+						}
+						if (arrows[i] == "LEFT")
+						{
+							LeftArrowScript temp1 = temp.GetComponent<LeftArrowScript>();
+							temp1.initialize(currentTime, eTime, true); 
+						}
+						if (arrows[i] == "UP")
+						{
+							UpArrowScript temp1 = temp.GetComponent<UpArrowScript>();
+							temp1.initialize(currentTime, eTime, true); 
+						}
+						if (arrows[i] == "RIGHT")
+						{
+							RightArrowScript temp1 = temp.GetComponent<RightArrowScript>();
+							temp1.initialize(currentTime, eTime, true); 
+						}
+					}
 				}
 				foreach (Transform child in P2Spawner.transform)
 				{
 					if (arrows[i] == child.name)
-						Instantiate(Resources.Load(child.name), child.position, child.rotation);
+					{
+						GameObject temp = (GameObject)Instantiate(Resources.Load(child.name), child.position, child.rotation);
+						if (arrows[i] == "DOWN")
+						{
+							DownArrowScript temp1 = temp.GetComponent<DownArrowScript>();
+							temp1.initialize(currentTime, eTime, false); 
+						}
+						if (arrows[i] == "LEFT")
+						{
+							LeftArrowScript temp1 = temp.GetComponent<LeftArrowScript>();
+							temp1.initialize(currentTime, eTime, false); 
+						}
+						if (arrows[i] == "UP")
+						{
+							UpArrowScript temp1 = temp.GetComponent<UpArrowScript>();
+							temp1.initialize(currentTime, eTime, false); 
+						}
+						if (arrows[i] == "RIGHT")
+						{
+							RightArrowScript temp1 = temp.GetComponent<RightArrowScript>();
+							temp1.initialize(currentTime, eTime, false); 
+						}
+					}
 				}
 			}
+
 		}
 		//how to check if game is over?
 		if (!song.isPlaying)
@@ -119,6 +170,7 @@ public class GameManager : MonoBehaviour {
 					if (i < entries.Length-1)
 						arrows += " ";
 				}
+				Debug.Log(float.Parse(entries[0]) * beatInterval);
 				//value here is the combination of arrows to be spawned, with the priority as the beat
 				beatMapPQueue.Enqueue(arrows, float.Parse(entries[0]) * beatInterval);
 			}

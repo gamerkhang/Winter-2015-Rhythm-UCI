@@ -42,7 +42,13 @@ public class PriorityQueue<P, V>
 		return res;
 	}
 	
-	
+	public P priorityPeek()
+	{
+		//returns the priority of the first object int he queue
+		SortedDictionary<P, LinkedList<V>>.KeyCollection.Enumerator enume = list.Keys.GetEnumerator();
+		enume.MoveNext();
+		return enume.Current;
+	}
 	
 	public void Replace(V value, P oldPriority, P newPriority){
 		LinkedList<V> v = list[oldPriority];
