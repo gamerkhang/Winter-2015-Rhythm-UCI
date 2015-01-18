@@ -124,7 +124,7 @@ public class CharacterSelection : MonoBehaviour {
 					break;
 			}
 
-			P1Cursor.transform.localPosition = new Vector3 (CharList[ApplicationModel.P1Char].transform.localPosition.x, -120f, 0f);
+			P1Cursor.transform.localPosition = new Vector3 (CharList[ApplicationModel.P1Char].transform.localPosition.x, 0f, 0f);
 		}
 		else {
 			if (Input.GetKeyUp(KeyCode.S)) {
@@ -186,7 +186,7 @@ public class CharacterSelection : MonoBehaviour {
 					P2SelectStats.GetComponent<Text> ().text = Char3Stats;
 					break;
 			}																				//Insert Text Here
-			P2Cursor.transform.localPosition = new Vector3 (CharList[ApplicationModel.P2Char].transform.localPosition.x, -120f, 0f);
+			P2Cursor.transform.localPosition = new Vector3 (CharList[ApplicationModel.P2Char].transform.localPosition.x, 0f, 0f);
 		}
 		else {
 			if (Input.GetKey(KeyCode.DownArrow)) {
