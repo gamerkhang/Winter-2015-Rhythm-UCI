@@ -12,7 +12,7 @@ public class MainMenu3Mins : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Time.time >= startTime + 180f) {
+		if (Time.time >= startTime + 20f) {
 			GetComponent<ChangeScene> ().ChangeToScene(0);
 		}
 	}
