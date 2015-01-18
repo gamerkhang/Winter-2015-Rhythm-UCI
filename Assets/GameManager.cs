@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
 	public AudioSource song;
 	public float beatInterval = 0;  //number storing 60 / bpm, set after bpm is read in
 	public float currentBeat = 0; //current beat the song is on
-	//priority queue of beats/arrows
+	PriorityQueue<float, string> beatMapPQueue;
 	//input manager link
 	//Player 1 Link?
 	//Player 2 Link?
@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		beatMapPQueue = new PriorityQueue<float, string>();
+		ReadBeatMap();
+		Debug.Log (beatMapPQueue.Dequeue());
 		song = GetComponent<AudioSource>();
 		song.Play ();
 	}
@@ -30,7 +33,9 @@ public class GameManager : MonoBehaviour {
 		//generate arrows depending on stuff in pQueue
 		//how to check if game is over?
 		if (!song.isPlaying)
+		{
 			Application.LoadLevel("Credits");
+		}
 	}
 
 	void ReadBeatMap() {
@@ -59,6 +64,7 @@ public class GameManager : MonoBehaviour {
 						// In this example, I split it into arguments based on comma
 						// deliniators, then send that array to ReadLine()
 						string[] entries = line.Split(' ');
+						Debug.Log (entries.ToString());
 						if (entries.Length > 0)
 							ParseBeatMapLine(entries);
 					}
@@ -86,7 +92,13 @@ public class GameManager : MonoBehaviour {
 		else {
 			try
 			{
-
+				string arrows = "";
+				for (int i = 1; i < entries.Length; i++) {
+					arrows += entries[i];
+				}
+				//value here is the combination of arrows to be spawned, with the priority as the beat
+				beatMapPQueue.Enqueue(arrows, float.Parse(entries[0]) * beatInterval);
+				Debug.Log(beatMapPQueue.ToString());
 			}
 			catch (System.Exception e)
 			{
