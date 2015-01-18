@@ -14,10 +14,17 @@ public class DownArrowScript : MonoBehaviour {
 	public LandingScript land;
 	// Use this for initialization
 	void Start () {
-		GameObject temp = GameObject.Find ("LandingPads");
+		GameObject temp;
+		if(isPlayer1)
+		{
+			temp = GameObject.Find ("LandingPads");
+			landing = GameObject.Find("DownArrowLanding");
+		}else
+		{
+			temp = GameObject.Find ("LandingPads2");
+			landing = GameObject.Find("DownArrowLanding2");
+		}
 		land = temp.GetComponent<LandingScript>();
-
-	landing = GameObject.Find("DownArrowLanding");
 		mSweetSpot = transform.Find("SweetSpot");
 		oSweetSpot = landing.transform.Find("SweetSpot");
 		float distance =  landing.transform.position.y - transform.position.y ;
