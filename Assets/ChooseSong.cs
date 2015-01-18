@@ -18,7 +18,7 @@ public class ChooseSong : MonoBehaviour {
 
 	public void OnButtonPress(string fileName) {
 		songStats.enabled = true;
-		ApplicationModel.song = fileName;
+		ApplicationModel.songbeatmap = fileName;
 		switch (fileName) {
 		case "Song0.txt":
 			songStats.text = "Title: Start Shootin\n" +
@@ -27,16 +27,18 @@ public class ChooseSong : MonoBehaviour {
 				"Genre: Acapella\n" +
 				"High Score: ";
 				audio.clip = Song0;
+			ApplicationModel.songaudiofile = Song0;
 				audio.Play();
 			break;
 		case "Song1.txt":
 			songStats.text = "Title: Natural Green\n" +
-					"by Blazo\n" +
-					"Length: 2:24\n" +
-					"Genre: Jazz, Hip Hop\n" +
-					"High Score: 100,200,300";
-					audio.clip = Song1;
-					audio.Play();
+				"by Blazo\n" +
+				"Length: 2:24\n" +
+				"Genre: Jazz, Hip Hop\n" +
+				"High Score: 100,200,300";
+				audio.clip = Song1;
+				ApplicationModel.songaudiofile = Song1;
+				audio.Play();
 			break;
 		}
 
