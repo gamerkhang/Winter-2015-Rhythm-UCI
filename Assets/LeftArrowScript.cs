@@ -14,9 +14,17 @@ public class LeftArrowScript : MonoBehaviour {
 	public LandingScript land;
 		// Use this for initialization
 	void Start () {
-		GameObject temp = GameObject.Find ("LandingPads");
+		GameObject temp;
+		if(isPlayer1)
+		{
+			temp = GameObject.Find ("LandingPads");
+			landing = GameObject.Find("LeftArrowLanding");
+		}else
+		{
+			temp = GameObject.Find ("LandingPads2");
+			landing = GameObject.Find("LeftArrowLanding2");
+		}
 		land = temp.GetComponent<LandingScript>();
-		landing = GameObject.Find("LeftArrowLanding");
 		mSweetSpot = transform.Find("SweetSpot");
 		oSweetSpot = landing.transform.Find("SweetSpot");
 		float distance =  landing.transform.position.y - transform.position.y ;
@@ -75,13 +83,25 @@ public class LeftArrowScript : MonoBehaviour {
 	}
 	void OnTriggerStay2D(Collider2D other)
 	{
-		
-		if(other.tag == "LeftPad")
+		if(isPlayer1)
 		{
-			if(land.aLeft == false)
+			if(other.tag == "LeftPad" && other.gameObject.layer == 8)
 			{
-			isActive = true;
-				land.aLeft = true;
+				if(land.aLeft == false)
+				{
+				isActive = true;
+					land.aLeft = true;
+				}
+			}
+		}else
+		{
+			if(other.tag == "LeftPad" && other.gameObject.layer == 9)
+			{
+				if(land.aLeft == false)
+				{
+					isActive = true;
+					land.aLeft = true;
+				}
 			}
 		}
 	}
