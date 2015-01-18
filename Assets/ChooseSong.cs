@@ -16,11 +16,11 @@ public class ChooseSong : MonoBehaviour {
 
 	}
 
-	public void OnButtonPress(string songName) {
+	public void OnButtonPress(string fileName) {
 		songStats.enabled = true;
-		ApplicationModel.song = songName;
-		switch (songName) {
-		case "I Need Your Love":
+		ApplicationModel.song = fileName;
+		switch (fileName) {
+		case "Song0.txt":
 			songStats.text = "Title: Start Shootin\n" +
 				"by Little People\n" +
 				"Length: 3:03\n" +
@@ -29,7 +29,7 @@ public class ChooseSong : MonoBehaviour {
 				audio.clip = Song0;
 				audio.Play();
 			break;
-		case "Natural Green":
+		case "Song1.txt":
 			songStats.text = "Title: Natural Green\n" +
 					"by Blazo\n" +
 					"Length: 2:24\n" +
