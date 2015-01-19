@@ -7,11 +7,9 @@ public class ChooseSong : MonoBehaviour {
 	public AudioClip Song0;
 	public AudioClip Song1;
 
-
-
-
 	public Text songStats;
 	public Button startGame;
+
 	void Start () {
 
 	}

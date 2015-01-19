@@ -8,7 +8,8 @@ public class ApplicationModel : MonoBehaviour {
 	static public string beatMap = "Song0_2.txt";
 	static public string song = "Jump.wav";
 	static public AudioClip songaudiofile;
-	//beat map file to load
+	//victory state, changed to say who won when song is over and is changed back when you leave stats screen
+
 //	// Use this for initialization
 //	void Start () {
 //	

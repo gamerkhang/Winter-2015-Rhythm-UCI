@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour {
 	//Judge Link?
 	//Link to background image for p1
 	//link to background image for p2
-	//victory state
 	public GameObject P1Spawner;
 	public GameObject P2Spawner;
 
