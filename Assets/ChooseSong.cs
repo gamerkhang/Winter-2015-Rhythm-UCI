@@ -18,7 +18,7 @@ public class ChooseSong : MonoBehaviour {
 
 	public void OnButtonPress(string fileName) {
 		songStats.enabled = true;
-		ApplicationModel.songbeatmap = fileName;
+		ApplicationModel.beatMap = fileName;
 		switch (fileName) {
 		case "Song0.txt":
 			songStats.text = "Title: Start Shootin\n" +

@@ -22,14 +22,17 @@ public class GameManager : MonoBehaviour {
 	public GameObject P1Spawner;
 	public GameObject P2Spawner;
 
-	// Use this for initialization
-	void Start () {
+	void Awake() {
 		beatMapPQueue = new PriorityQueue<float, string>();
 		ReadBeatMap();
 		P1Spawner = GameObject.Find ("Player1Spawner");
 		P2Spawner = GameObject.Find ("Player2Spawner");
-		//start counting beats?
 		song = GetComponent<AudioSource>();
+		Debug.Log (beatMapPQueue.ToString());
+	}
+
+	// Use this for initialization
+	void Start () {
 		song.Play ();
 		startTime = Time.time;
 	}
@@ -41,11 +44,10 @@ public class GameManager : MonoBehaviour {
 		while (currentTime >= (beatMapPQueue.priorityPeek() - arrowSpawnDelay) && !beatMapPQueue.IsEmpty)
 		{
 			float eTime = beatMapPQueue.priorityPeek();
-			Debug.Log("GAMEMANSTART: " + (beatMapPQueue.priorityPeek() - arrowSpawnDelay));
-			Debug.Log("GAMEMANEnd: " + eTime);
 			string[] arrows = beatMapPQueue.Dequeue().Split(' ');
 			for (int i = 0; i < arrows.Length; i++)
 			{
+				Debug.Log (arrows[i]);
 				foreach (Transform child in P1Spawner.transform)
 				{
 					if (arrows[i] == child.name)
@@ -56,20 +58,49 @@ public class GameManager : MonoBehaviour {
 							DownArrowScript temp1 = temp.GetComponent<DownArrowScript>();
 							temp1.initialize(currentTime, eTime, true); 
 						}
-						if (arrows[i] == "LEFT")
+						else if (arrows[i] == "LEFT")
 						{
 							LeftArrowScript temp1 = temp.GetComponent<LeftArrowScript>();
 							temp1.initialize(currentTime, eTime, true); 
 						}
-						if (arrows[i] == "UP")
+						else if (arrows[i] == "UP")
 						{
 							UpArrowScript temp1 = temp.GetComponent<UpArrowScript>();
 							temp1.initialize(currentTime, eTime, true); 
 						}
-						if (arrows[i] == "RIGHT")
+						else if (arrows[i] == "RIGHT")
 						{
 							RightArrowScript temp1 = temp.GetComponent<RightArrowScript>();
 							temp1.initialize(currentTime, eTime, true); 
+						}
+					}
+
+					else if (arrows[i].Contains ("HOLD"))
+					{
+						// get the direction of the hold arrow
+						string holdDir = arrows[i].Substring(4, arrows[i].Length - 5);
+						float holdDuration = (float)((arrows[i])[arrows.Length-1] * beatInterval);
+						if (holdDir == child.name)
+						{
+							//instantiate arrow?
+							if (holdDir == "DOWN")
+							{
+								//get appropriate direction script
+								//initialize
+								//any other hold details
+							}
+							else if (holdDir == "LEFT")
+							{
+								
+							}
+							else if (holdDir == "UP")
+							{
+								
+							}
+							else if (holdDir == "RIGHT")
+							{
+								
+							}
 						}
 					}
 				}
@@ -83,20 +114,49 @@ public class GameManager : MonoBehaviour {
 							DownArrowScript temp1 = temp.GetComponent<DownArrowScript>();
 							temp1.initialize(currentTime, eTime, false); 
 						}
-						if (arrows[i] == "LEFT")
+						else if (arrows[i] == "LEFT")
 						{
 							LeftArrowScript temp1 = temp.GetComponent<LeftArrowScript>();
 							temp1.initialize(currentTime, eTime, false); 
 						}
-						if (arrows[i] == "UP")
+						else if (arrows[i] == "UP")
 						{
 							UpArrowScript temp1 = temp.GetComponent<UpArrowScript>();
 							temp1.initialize(currentTime, eTime, false); 
 						}
-						if (arrows[i] == "RIGHT")
+						else if (arrows[i] == "RIGHT")
 						{
 							RightArrowScript temp1 = temp.GetComponent<RightArrowScript>();
 							temp1.initialize(currentTime, eTime, false); 
+						}
+					}
+
+					else if (arrows[i].Contains ("HOLD"))
+					{
+						// get the direction of the hold arrow
+						string holdDir = arrows[i].Substring(4, arrows[i].Length - 5);
+						float holdDuration = (float)((arrows[i])[arrows.Length-1] * beatInterval);
+						if (holdDir == child.name)
+						{
+							//instantiate arrow?
+							if (holdDir == "DOWN")
+							{
+								//get appropriate direction script
+								//initialize
+								//any other hold details
+							}
+							else if (holdDir == "LEFT")
+							{
+								
+							}
+							else if (holdDir == "UP")
+							{
+								
+							}
+							else if (holdDir == "RIGHT")
+							{
+								
+							}
 						}
 					}
 				}
@@ -106,7 +166,7 @@ public class GameManager : MonoBehaviour {
 		//how to check if game is over?
 		if (!song.isPlaying)
 		{
-			Application.LoadLevel("Credits");
+			Application.LoadLevel("Score Review");
 		}
 	}
 
@@ -115,7 +175,7 @@ public class GameManager : MonoBehaviour {
 		{
 			// Create a new StreamReader, tell it which file to read and what encoding the file
 			// was saved as
-			StreamReader theReader = new StreamReader(Application.dataPath + "/BeatMaps/" + TestApplicationModel.beatMap, Encoding.Default);
+			StreamReader theReader = new StreamReader(Application.dataPath + "/Resources/BeatMaps/" + ApplicationModel.beatMap, Encoding.Default);
 			
 			// Immediately clean up the reader after this block of code is done.
 			// You generally use the "using" statement for potentially memory-intensive objects

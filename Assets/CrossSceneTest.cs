@@ -8,7 +8,7 @@ public class CrossSceneTest : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		test.text = "" + ApplicationModel.P2Char;
-		TEST2.text = ApplicationModel.songbeatmap;
+		TEST2.text = ApplicationModel.beatMap;
 	}
 	
 	// Update is called once per frame
