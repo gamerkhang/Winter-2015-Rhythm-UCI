@@ -20,12 +20,15 @@ public class UpArrowScript : MonoBehaviour {
 	public int numOfHoldNotes;
 	public GameObject holdNote;
 	public bool startHold;
+	public PlayerStatus pStats;
+
 	// Use this for initialization
 	void Start () {
 
 	}
 	public void initialize(float sTime, float eTime, bool isPlayer, float holdD = 0f)
 	{
+		pStats = GameObject.Find ("PlayerStatusManager").GetComponent<PlayerStatus>();
 		holdDuration = holdD;
 		startTime = sTime;
 		endTime = eTime;
@@ -57,14 +60,14 @@ public class UpArrowScript : MonoBehaviour {
 			float holdLength = mVelocity * holdDuration;
 			float backPoint = transform.position.y - holdLength;
 			int counter = 0;
-			for(float i = transform.position.y - .1f; i > backPoint; i -= .1f)
+			for(float i = transform.position.y - .1f; i > backPoint; i -= .3f)
 			{
 				counter++;
 			}
 			holdNotes = new GameObject[counter];
 			numOfHoldNotes = counter;
 			counter = 0;
-			for(float i = transform.position.y - .1f; i > backPoint; i -= .1f)
+			for(float i = transform.position.y - .1f; i > backPoint; i -= .3f)
 			{
 				holdNotes[counter] = (GameObject)Instantiate(holdNote,new Vector2(transform.position.x,i),transform.rotation);
 				holdNotes[counter].transform.FindChild("Sprite").rotation = transform.FindChild ("ArrowSprite").rotation;
@@ -79,62 +82,69 @@ public class UpArrowScript : MonoBehaviour {
 	void Update () {
 		if(isActive)
 		{
-			if(isPlayer1)
+			if(!isPlayer1)
 			{
-				if(Input.GetKeyDown(KeyCode.UpArrow))
-				{
-					float dist = checkAccuracy();
-					if(Mathf.Abs(dist) < .1f )
+				if (!pStats.p2upFrozen) {
+					if(Input.GetKeyDown(KeyCode.UpArrow))
 					{
-						Debug.Log("GREAT");
-					}
-					else if(Mathf.Abs(dist) < .3f )
-					{
-						Debug.Log("OK");
-					}
-					else
-					{
-						Debug.Log("LAME");
-					}
-					if(!isHold)
-					{
-						land.aDown = false;
-						Destroy(gameObject);
-					}else
-					{
-						transform.position = landing.transform.Find("SweetSpot").position;
-						transform.rigidbody2D.velocity = Vector2.zero;
-						startHold = true;
-						StartCoroutine("holdTheNote");
+						float dist = checkAccuracy();
+						if(Mathf.Abs(dist) < .1f )
+						{
+							pStats.p2Score += pStats.great;
+						}
+						else if(Mathf.Abs(dist) < .3f )
+						{
+							pStats.p2Score += pStats.ok;
+						}
+						else
+						{
+							pStats.p2Score += pStats.lame;
+						}
+						pStats.UpdateMeter(isPlayer1, true);
+
+						if(!isHold)
+						{
+							land.aUp = false;
+							Destroy(gameObject);
+						}else
+						{
+							transform.position = landing.transform.Find("SweetSpot").position;
+							transform.rigidbody2D.velocity = Vector2.zero;
+							startHold = true;
+							StartCoroutine("holdTheNote");
+						}
 					}
 				}
 			}
 			else{
-				if(Input.GetKeyDown (KeyCode.W))
-				{
-					float dist = checkAccuracy();
-					if(Mathf.Abs(dist) < .1f )
+				if (!pStats.p1upFrozen) {
+					if(Input.GetKeyDown (KeyCode.W))
 					{
-						Debug.Log("GREAT");
-					}
-					else if(Mathf.Abs(dist) < .3f )
-					{
-						Debug.Log("OK");
-					}
-					else
-					{
-						Debug.Log("LAME");
-					}
-					if(!isHold)
-					{
-						land.aDown = false;
-						Destroy(gameObject);
-					}else
-					{
-						transform.position = landing.transform.Find("SweetSpot").position;
-						transform.rigidbody2D.velocity = Vector2.zero;
-						startHold = true;
-						StartCoroutine("holdTheNote");
+						float dist = checkAccuracy();
+						if(Mathf.Abs(dist) < .1f )
+						{
+							pStats.p1Score += pStats.great;
+						}
+						else if(Mathf.Abs(dist) < .3f )
+						{
+							pStats.p1Score += pStats.ok;
+						}
+						else
+						{
+							pStats.p1Score += pStats.lame;
+						}
+						pStats.UpdateMeter(isPlayer1, true);
+						if(!isHold)
+						{
+							land.aUp = false;
+							Destroy(gameObject);
+						}else
+						{
+							transform.position = landing.transform.Find("SweetSpot").position;
+							transform.rigidbody2D.velocity = Vector2.zero;
+							startHold = true;
+							StartCoroutine("holdTheNote");
+						}
 					}
 				}
 			}
@@ -168,6 +178,7 @@ public class UpArrowScript : MonoBehaviour {
 				}
 			}
 			land.aUp = false;
+			pStats.UpdateMeter(isPlayer1, false);
 			Destroy (gameObject);
 		}
 	}
@@ -225,7 +236,7 @@ public class UpArrowScript : MonoBehaviour {
 				Debug.Log("BooM");
 			}
 		}
-		land.aDown = false;
+		land.aUp = false;
 		Destroy(gameObject);
 	}
 }
