@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour {
 	public float beatInterval = 0;  //number storing 60 / bpm, set after bpm is read in
 	public float startTime = 0;
 	public float currentTime = 0; //current beat the song is on
-	public float arrowSpawnDelay = 1f;
+	public float arrowSpawnDelay = 10f;
+	public bool startSong = false;
 	PriorityQueue<float, string> beatMapPQueue;
 	//Player 1 Link?
 	//Player 2 Link?
@@ -32,10 +33,11 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
 		song.Play ();
 		startTime = Time.time;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		currentTime = Time.time - startTime;
@@ -167,9 +169,9 @@ public class GameManager : MonoBehaviour {
 
 		}
 		//how to check if game is over?
-		if (!song.isPlaying)
+		if (currentTime >= 40.0f || !song.isPlaying)
 		{
-			Application.LoadLevel("Score Review");
+			Application.LoadLevel("ScoreReview");
 		}
 	}
 
