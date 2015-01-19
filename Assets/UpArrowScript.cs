@@ -165,7 +165,7 @@ public class UpArrowScript : MonoBehaviour {
 	
 	void OnTriggerExit2D(Collider2D other)
 	{
-		Debug.Log("here");
+		//Debug.Log("here");
 		if(other.tag == "UpPad")
 		{
 			Debug.Log ("MISS");

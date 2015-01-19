@@ -9,9 +9,6 @@ public class ApplicationModel : MonoBehaviour {
 	static public string song = "Jump.wav";
 	static public AudioClip songaudiofile;
 	//victory state, changed to say who won when song is over and is changed back when you leave stats screen
-	
-	static public int P1Score;
-	static public int P2Score;
 
 //	// Use this for initialization
 //	void Start () {
