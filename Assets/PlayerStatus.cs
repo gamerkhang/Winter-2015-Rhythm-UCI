@@ -83,13 +83,13 @@ public class PlayerStatus : MonoBehaviour {
 		p2MeterText.text = "P2 Meter: " + p2Meter;
 
 		//Unfreeze
-		if (Time.time >= p1LastFreeze + 2f) {
+		if (Time.time >= p1LastFreeze + 3f) {
 			p1leftFrozen= false;
 			p1upFrozen= false;
 			p1downFrozen= false;
 			p1rightFrozen= false;
 		}
-		if (Time.time >= p2LastFreeze + 2f) {
+		if (Time.time >= p2LastFreeze + 3f) {
 			p2leftFrozen= false;
 			p2upFrozen= false;
 			p2downFrozen= false;

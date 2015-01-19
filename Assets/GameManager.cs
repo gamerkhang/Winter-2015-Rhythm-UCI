@@ -169,7 +169,7 @@ public class GameManager : MonoBehaviour {
 
 		}
 		//how to check if game is over?
-		if (currentTime >= 40.0f || !song.isPlaying)
+		if (!song.isPlaying)
 		{
 			Application.LoadLevel("ScoreReview");
 		}

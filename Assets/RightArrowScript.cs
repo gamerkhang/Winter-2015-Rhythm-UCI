@@ -20,12 +20,14 @@ public class RightArrowScript : MonoBehaviour {
 	public int numOfHoldNotes;
 	public GameObject holdNote;
 	public bool startHold;
+	public PlayerStatus pStats;
 	// Use this for initialization
 	void Start () {
 
 	}
 	public void initialize(float sTime, float eTime, bool isPlayer, float holdD = 0f)
 	{
+		pStats = GameObject.Find ("PlayerStatusManager").GetComponent<PlayerStatus>();
 		holdDuration = holdD;
 		startTime = sTime;
 		endTime = eTime;
@@ -56,14 +58,14 @@ public class RightArrowScript : MonoBehaviour {
 			float holdLength = mVelocity * holdDuration;
 			float backPoint = transform.position.y - holdLength;
 			int counter = 0;
-			for(float i = transform.position.y - .3f; i > backPoint; i -= .3f)
+			for(float i = transform.position.y - .1f; i > backPoint; i -= .3f)
 			{
 				counter++;
 			}
 			holdNotes = new GameObject[counter];
 			numOfHoldNotes = counter;
 			counter = 0;
-			for(float i = transform.position.y - .3f; i > backPoint; i -= .3f)
+			for(float i = transform.position.y - .1f; i > backPoint; i -= .3f)
 			{
 				holdNotes[counter] = (GameObject)Instantiate(holdNote,new Vector2(transform.position.x,i),transform.rotation);
 				holdNotes[counter].transform.FindChild("Sprite").rotation = transform.FindChild ("ArrowSprite").rotation;
@@ -78,62 +80,69 @@ public class RightArrowScript : MonoBehaviour {
 	void Update () {
 		if(isActive)
 		{
-			if(isPlayer1)
+			if(!isPlayer1)
 			{
-				if(Input.GetKeyDown(KeyCode.RightArrow))
-				{
-					float dist = checkAccuracy();
-					if(Mathf.Abs(dist) < .1f )
+				if (!pStats.p2rightFrozen) {
+					if(Input.GetKeyDown(KeyCode.RightArrow))
 					{
-						Debug.Log("GREAT");
-					}
-					else if(Mathf.Abs(dist) < .3f )
-					{
-						Debug.Log("OK");
-					}
-					else
-					{
-						Debug.Log("LAME");
-					}
-					if(!isHold)
-					{
-						land.aDown = false;
-						Destroy(gameObject);
-					}else
-					{
-						transform.position = landing.transform.Find("SweetSpot").position;
-						transform.rigidbody2D.velocity = Vector2.zero;
-						startHold = true;
-						StartCoroutine("holdTheNote");
+						float dist = checkAccuracy();
+						if(Mathf.Abs(dist) < .1f )
+						{
+							pStats.p2Score += pStats.great;
+						}
+						else if(Mathf.Abs(dist) < .3f )
+						{
+							pStats.p2Score += pStats.ok;
+						}
+						else
+						{
+							pStats.p2Score += pStats.lame;
+						}
+						pStats.UpdateMeter(isPlayer1, true);
+						if(!isHold)
+						{
+							land.aRight = false;
+							Destroy(gameObject);
+						}else
+						{
+							transform.position = landing.transform.Find("SweetSpot").position;
+							transform.rigidbody2D.velocity = Vector2.zero;
+							startHold = true;
+							StartCoroutine("holdTheNote");
+						}
 					}
 				}
 			}
 			else{
-				if(Input.GetKeyDown (KeyCode.D))
-				{
-					float dist = checkAccuracy();
-					if(Mathf.Abs(dist) < .1f )
+				if (!pStats.p1rightFrozen) {
+					if(Input.GetKeyDown (KeyCode.D))
 					{
-						Debug.Log("GREAT");
-					}
-					else if(Mathf.Abs(dist) < .3f )
-					{
-						Debug.Log("OK");
-					}
-					else
-					{
-						Debug.Log("LAME");
-					}
-					if(!isHold)
-					{
-						land.aDown = false;
-						Destroy(gameObject);
-					}else
-					{
-						transform.position = landing.transform.Find("SweetSpot").position;
-						transform.rigidbody2D.velocity = Vector2.zero;
-						startHold = true;
-						StartCoroutine("holdTheNote");
+						float dist = checkAccuracy();
+						if(Mathf.Abs(dist) < .1f )
+						{
+							pStats.p1Score += pStats.great;
+						}
+						else if(Mathf.Abs(dist) < .3f )
+						{
+							pStats.p1Score += pStats.ok;
+						}
+						else
+						{
+							pStats.p1Score += pStats.lame;
+						}
+						pStats.UpdateMeter(isPlayer1, true);
+
+						if(!isHold)
+						{
+							land.aRight = false;
+							Destroy(gameObject);
+						}else
+						{
+							transform.position = landing.transform.Find("SweetSpot").position;
+							transform.rigidbody2D.velocity = Vector2.zero;
+							startHold = true;
+							StartCoroutine("holdTheNote");
+						}
 					}
 				}
 			}
@@ -154,7 +163,7 @@ public class RightArrowScript : MonoBehaviour {
 	
 	void OnTriggerExit2D(Collider2D other)
 	{
-		//Debug.Log("here");
+		Debug.Log("here");
 		if(other.tag == "RightPad")
 		{
 			Debug.Log ("MISS");
@@ -163,10 +172,11 @@ public class RightArrowScript : MonoBehaviour {
 				if(hold != null)
 				{
 					Destroy(hold);
-					//Debug.Log("BooM");
+					Debug.Log("BooM");
 				}
 			}
 			land.aRight = false;
+			pStats.UpdateMeter(isPlayer1, false);
 			Destroy (gameObject);
 		}
 	}
@@ -174,7 +184,7 @@ public class RightArrowScript : MonoBehaviour {
 	float checkAccuracy()
 	{
 		float dist = (oSweetSpot.position.y - mSweetSpot.position.y);
-		//Debug.Log ("Distance is " + dist);
+		Debug.Log ("Distance is " + dist);
 		return dist;
 	}
 	void FixedUpdate(){
@@ -193,7 +203,7 @@ public class RightArrowScript : MonoBehaviour {
 		while(holdDuration > time) {
 			if(!Input.GetKey (temp))
 			{
-				//Debug.Log ("Pressing" + temp + "is " + Input.GetKey(temp));
+				Debug.Log ("Pressing" + temp + "is " + Input.GetKey(temp));
 				time = holdDuration + 1;
 			}
 			foreach(GameObject hold in holdNotes)
@@ -204,7 +214,7 @@ public class RightArrowScript : MonoBehaviour {
 					             landing.transform.FindChild("SweetSpot").transform.position.y) <.05f)
 					{
 						Destroy(hold);
-						//Debug.Log ("HELD");
+						Debug.Log ("HELD");
 					}else if(hold.transform.FindChild ("SweetSpot").transform.position.y > 
 					         landing.transform.FindChild("SweetSpot").transform.position.y )
 					{
@@ -221,10 +231,10 @@ public class RightArrowScript : MonoBehaviour {
 			if(hold != null)
 			{
 				Destroy(hold);
-				//Debug.Log("BooM");
+				Debug.Log("BooM");
 			}
 		}
-		land.aDown = false;
+		land.aRight = false;
 		Destroy(gameObject);
 	}
 }
