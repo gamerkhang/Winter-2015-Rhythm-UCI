@@ -22,7 +22,7 @@ public class RightArrowScript : MonoBehaviour {
 	public bool startHold;
 	// Use this for initialization
 	void Start () {
-	
+
 	}
 	public void initialize(float sTime, float eTime, bool isPlayer, float holdD = 0f)
 	{

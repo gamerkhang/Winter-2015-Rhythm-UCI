@@ -78,27 +78,29 @@ public class GameManager : MonoBehaviour {
 					{
 						// get the direction of the hold arrow
 						string holdDir = arrows[i].Substring(4, arrows[i].Length - 5);
-						float holdDuration = (float)((arrows[i])[arrows.Length-1] * beatInterval);
+						float holdDuration = (float.Parse(arrows[i].Substring(arrows[i].Length-1)) * beatInterval);
 						if (holdDir == child.name)
 						{
-							//instantiate arrow?
+							GameObject temp = (GameObject)Instantiate(Resources.Load(child.name), child.position, child.rotation);
 							if (holdDir == "DOWN")
 							{
-								//get appropriate direction script
-								//initialize
-								//any other hold details
+								DownArrowScript temp1 = temp.GetComponent<DownArrowScript>();
+								temp1.initialize(currentTime, eTime, true, holdDuration);
 							}
 							else if (holdDir == "LEFT")
 							{
-								
+								LeftArrowScript temp1 = temp.GetComponent<LeftArrowScript>();
+								temp1.initialize(currentTime, eTime, true, holdDuration);
 							}
 							else if (holdDir == "UP")
 							{
-								
+								UpArrowScript temp1 = temp.GetComponent<UpArrowScript>();
+								temp1.initialize(currentTime, eTime, true, holdDuration);
 							}
 							else if (holdDir == "RIGHT")
 							{
-								
+								RightArrowScript temp1 = temp.GetComponent<RightArrowScript>();
+								temp1.initialize(currentTime, eTime, true, holdDuration);
 							}
 						}
 					}
@@ -134,27 +136,29 @@ public class GameManager : MonoBehaviour {
 					{
 						// get the direction of the hold arrow
 						string holdDir = arrows[i].Substring(4, arrows[i].Length - 5);
-						float holdDuration = (float)((arrows[i])[arrows.Length-1] * beatInterval);
+						float holdDuration = (float.Parse(arrows[i].Substring(arrows[i].Length-1)) * beatInterval);
 						if (holdDir == child.name)
 						{
-							//instantiate arrow?
+							GameObject temp = (GameObject)Instantiate(Resources.Load(child.name), child.position, child.rotation);
 							if (holdDir == "DOWN")
 							{
-								//get appropriate direction script
-								//initialize
-								//any other hold details
+								DownArrowScript temp1 = temp.GetComponent<DownArrowScript>();
+								temp1.initialize(currentTime, eTime, false, holdDuration);
 							}
 							else if (holdDir == "LEFT")
 							{
-								
+								LeftArrowScript temp1 = temp.GetComponent<LeftArrowScript>();
+								temp1.initialize(currentTime, eTime, false, holdDuration);
 							}
 							else if (holdDir == "UP")
 							{
-								
+								UpArrowScript temp1 = temp.GetComponent<UpArrowScript>();
+								temp1.initialize(currentTime, eTime, false, holdDuration);
 							}
 							else if (holdDir == "RIGHT")
 							{
-								
+								RightArrowScript temp1 = temp.GetComponent<RightArrowScript>();
+								temp1.initialize(currentTime, eTime, false, holdDuration);
 							}
 						}
 					}

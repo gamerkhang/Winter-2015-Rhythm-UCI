@@ -22,7 +22,7 @@ public class UpArrowScript : MonoBehaviour {
 	public bool startHold;
 	// Use this for initialization
 	void Start () {
-	
+
 	}
 	public void initialize(float sTime, float eTime, bool isPlayer, float holdD = 0f)
 	{
@@ -32,6 +32,7 @@ public class UpArrowScript : MonoBehaviour {
 		isPlayer1 = isPlayer;
 		GameObject temp;
 		holdNote = Resources.Load<GameObject>("HoldArrows");
+
 		if(isPlayer1)
 		{
 			temp = GameObject.Find ("LandingPads");
