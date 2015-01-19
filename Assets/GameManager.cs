@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour {
 		P1Spawner = GameObject.Find ("Player1Spawner");
 		P2Spawner = GameObject.Find ("Player2Spawner");
 		song = GetComponent<AudioSource>();
-		Debug.Log (beatMapPQueue.ToString());
+		//Debug.Log (beatMapPQueue.ToString());
 	}
 
 	// Use this for initialization
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour {
 			string[] arrows = beatMapPQueue.Dequeue().Split(' ');
 			for (int i = 0; i < arrows.Length; i++)
 			{
-				Debug.Log (arrows[i]);
+				//Debug.Log (arrows[i]);
 				foreach (Transform child in P1Spawner.transform)
 				{
 					if (arrows[i] == child.name)
@@ -213,7 +213,7 @@ public class GameManager : MonoBehaviour {
 		// on what didn't work
 		catch (System.Exception e)
 		{
-			Debug.Log("{0}\n" + e.Message);
+			//Debug.Log("{0}\n" + e.Message);
 		}
 	}
 
@@ -233,13 +233,13 @@ public class GameManager : MonoBehaviour {
 					if (i < entries.Length-1)
 						arrows += " ";
 				}
-				Debug.Log(float.Parse(entries[0]) * beatInterval);
+			//	Debug.Log(float.Parse(entries[0]) * beatInterval);
 				//value here is the combination of arrows to be spawned, with the priority as the beat
 				beatMapPQueue.Enqueue(arrows, float.Parse(entries[0]) * beatInterval);
 			}
 			catch (System.Exception e)
 			{
-				Debug.Log("{0}\n" + e.Message);
+				//Debug.Log("{0}\n" + e.Message);
 			}
 		}
 	}

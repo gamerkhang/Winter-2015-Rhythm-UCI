@@ -153,7 +153,7 @@ public class LeftArrowScript : MonoBehaviour {
 	
 	void OnTriggerExit2D(Collider2D other)
 	{
-		Debug.Log("here");
+		//Debug.Log("here");
 		if(other.tag == "LeftPad")
 		{
 			Debug.Log ("MISS");
@@ -162,7 +162,7 @@ public class LeftArrowScript : MonoBehaviour {
 				if(hold != null)
 				{
 					Destroy(hold);
-					Debug.Log("BooM");
+					//Debug.Log("BooM");
 				}
 			}
 			land.aLeft = false;

@@ -56,14 +56,14 @@ public class RightArrowScript : MonoBehaviour {
 			float holdLength = mVelocity * holdDuration;
 			float backPoint = transform.position.y - holdLength;
 			int counter = 0;
-			for(float i = transform.position.y - .1f; i > backPoint; i -= .1f)
+			for(float i = transform.position.y - .3f; i > backPoint; i -= .3f)
 			{
 				counter++;
 			}
 			holdNotes = new GameObject[counter];
 			numOfHoldNotes = counter;
 			counter = 0;
-			for(float i = transform.position.y - .1f; i > backPoint; i -= .1f)
+			for(float i = transform.position.y - .3f; i > backPoint; i -= .3f)
 			{
 				holdNotes[counter] = (GameObject)Instantiate(holdNote,new Vector2(transform.position.x,i),transform.rotation);
 				holdNotes[counter].transform.FindChild("Sprite").rotation = transform.FindChild ("ArrowSprite").rotation;
@@ -154,7 +154,7 @@ public class RightArrowScript : MonoBehaviour {
 	
 	void OnTriggerExit2D(Collider2D other)
 	{
-		Debug.Log("here");
+		//Debug.Log("here");
 		if(other.tag == "RightPad")
 		{
 			Debug.Log ("MISS");
@@ -163,7 +163,7 @@ public class RightArrowScript : MonoBehaviour {
 				if(hold != null)
 				{
 					Destroy(hold);
-					Debug.Log("BooM");
+					//Debug.Log("BooM");
 				}
 			}
 			land.aRight = false;
@@ -174,7 +174,7 @@ public class RightArrowScript : MonoBehaviour {
 	float checkAccuracy()
 	{
 		float dist = (oSweetSpot.position.y - mSweetSpot.position.y);
-		Debug.Log ("Distance is " + dist);
+		//Debug.Log ("Distance is " + dist);
 		return dist;
 	}
 	void FixedUpdate(){
@@ -193,7 +193,7 @@ public class RightArrowScript : MonoBehaviour {
 		while(holdDuration > time) {
 			if(!Input.GetKey (temp))
 			{
-				Debug.Log ("Pressing" + temp + "is " + Input.GetKey(temp));
+				//Debug.Log ("Pressing" + temp + "is " + Input.GetKey(temp));
 				time = holdDuration + 1;
 			}
 			foreach(GameObject hold in holdNotes)
@@ -204,7 +204,7 @@ public class RightArrowScript : MonoBehaviour {
 					             landing.transform.FindChild("SweetSpot").transform.position.y) <.05f)
 					{
 						Destroy(hold);
-						Debug.Log ("HELD");
+						//Debug.Log ("HELD");
 					}else if(hold.transform.FindChild ("SweetSpot").transform.position.y > 
 					         landing.transform.FindChild("SweetSpot").transform.position.y )
 					{
@@ -221,7 +221,7 @@ public class RightArrowScript : MonoBehaviour {
 			if(hold != null)
 			{
 				Destroy(hold);
-				Debug.Log("BooM");
+				//Debug.Log("BooM");
 			}
 		}
 		land.aDown = false;
