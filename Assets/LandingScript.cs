@@ -16,6 +16,21 @@ public class LandingScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(aLeft == false && Input.GetKeyDown(KeyCode.A))
+		{
+			Debug.Log("stahp LEFT");
+		}
+		if(aRight== false && Input.GetKeyDown(KeyCode.D))
+		{
+			Debug.Log("stahp Right");
+		}
+		if(aUp == false && Input.GetKeyDown(KeyCode.W))
+		{
+			Debug.Log("stahp Up");
+		}
+		if(aDown == false && Input.GetKeyDown(KeyCode.S))
+		{
+			Debug.Log("stahp Down");
+		}
 	}
 }
