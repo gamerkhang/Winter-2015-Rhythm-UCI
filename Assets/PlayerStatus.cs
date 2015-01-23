@@ -5,15 +5,9 @@ using System.Collections.Generic;
 
 public class PlayerStatus : MonoBehaviour {
 	//Frozen
-	public bool p1upFrozen = false;
-	public bool p1downFrozen = false;
-	public bool p1leftFrozen = false;
-	public bool p1rightFrozen = false;
-
-	public bool p2upFrozen = false;
-	public bool p2downFrozen = false;
-	public bool p2leftFrozen = false;
-	public bool p2rightFrozen = false;
+	public bool p1Frozen = false;
+	
+	public bool p2Frozen = false;
 
 	float p1LastFreeze;
 	float p2LastFreeze;
@@ -83,17 +77,11 @@ public class PlayerStatus : MonoBehaviour {
 		p2MeterText.text = "P2 Meter: " + p2Meter;
 
 		//Unfreeze
-		if (Time.time >= p1LastFreeze + 3f) {
-			p1leftFrozen= false;
-			p1upFrozen= false;
-			p1downFrozen= false;
-			p1rightFrozen= false;
+		if (Time.time >= p1LastFreeze + 1f) {
+			p1Frozen= false;
 		}
-		if (Time.time >= p2LastFreeze + 3f) {
-			p2leftFrozen= false;
-			p2upFrozen= false;
-			p2downFrozen= false;
-			p2rightFrozen= false;
+		if (Time.time >= p2LastFreeze + 1f) {
+			p2Frozen= false;
 		}
 
 		//Attacks
@@ -153,20 +141,14 @@ public class PlayerStatus : MonoBehaviour {
 		if (isPlayer1) {
 			if (attack == "Freeze") {
 				//p2pads[Random.Range(0, 3)] = true;
-				p2leftFrozen= true;
-				p2upFrozen= true;
-				p2downFrozen= true;
-				p2rightFrozen= true;
+				p2Frozen= true;
 				p2LastFreeze = Time.time;
 			}
 		}
 		else {
 			if (attack == "Freeze") {
 				//p1pads[Random.Range(0, 3)] = true;
-				p1leftFrozen= true;
-				p1upFrozen= true;
-				p1downFrozen= true;
-				p1rightFrozen= true;
+				p1Frozen= true;
 				p1LastFreeze = Time.time;
 			}
 		}

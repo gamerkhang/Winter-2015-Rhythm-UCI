@@ -54,26 +54,8 @@ public class GameManager : MonoBehaviour {
 					if (arrows[i] == child.name)
 					{
 						GameObject temp = (GameObject)Instantiate(Resources.Load(child.name), child.position, child.rotation);
-						if (arrows[i] == "DOWN")
-						{
-							DownArrowScript temp1 = temp.GetComponent<DownArrowScript>();
-							temp1.initialize(currentTime, eTime, true); 
-						}
-						else if (arrows[i] == "LEFT")
-						{
-							LeftArrowScript temp1 = temp.GetComponent<LeftArrowScript>();
-							temp1.initialize(currentTime, eTime, true); 
-						}
-						else if (arrows[i] == "UP")
-						{
-							UpArrowScript temp1 = temp.GetComponent<UpArrowScript>();
-							temp1.initialize(currentTime, eTime, true); 
-						}
-						else if (arrows[i] == "RIGHT")
-						{
-							RightArrowScript temp1 = temp.GetComponent<RightArrowScript>();
-							temp1.initialize(currentTime, eTime, true); 
-						}
+						ArrowScript temp1 = temp.GetComponent<ArrowScript>();
+						temp1.initialize(currentTime, eTime, true); 
 					}
 
 					else if (arrows[i].Contains ("HOLD"))
@@ -84,26 +66,8 @@ public class GameManager : MonoBehaviour {
 						if (holdDir == child.name)
 						{
 							GameObject temp = (GameObject)Instantiate(Resources.Load(child.name), child.position, child.rotation);
-							if (holdDir == "DOWN")
-							{
-								DownArrowScript temp1 = temp.GetComponent<DownArrowScript>();
-								temp1.initialize(currentTime, eTime, true, holdDuration);
-							}
-							else if (holdDir == "LEFT")
-							{
-								LeftArrowScript temp1 = temp.GetComponent<LeftArrowScript>();
-								temp1.initialize(currentTime, eTime, true, holdDuration);
-							}
-							else if (holdDir == "UP")
-							{
-								UpArrowScript temp1 = temp.GetComponent<UpArrowScript>();
-								temp1.initialize(currentTime, eTime, true, holdDuration);
-							}
-							else if (holdDir == "RIGHT")
-							{
-								RightArrowScript temp1 = temp.GetComponent<RightArrowScript>();
-								temp1.initialize(currentTime, eTime, true, holdDuration);
-							}
+							ArrowScript temp1 = temp.GetComponent<ArrowScript>();
+							temp1.initialize(currentTime, eTime, true, holdDuration);
 						}
 					}
 				}
@@ -112,26 +76,9 @@ public class GameManager : MonoBehaviour {
 					if (arrows[i] == child.name)
 					{
 						GameObject temp = (GameObject)Instantiate(Resources.Load(child.name), child.position, child.rotation);
-						if (arrows[i] == "DOWN")
-						{
-							DownArrowScript temp1 = temp.GetComponent<DownArrowScript>();
-							temp1.initialize(currentTime, eTime, false); 
-						}
-						else if (arrows[i] == "LEFT")
-						{
-							LeftArrowScript temp1 = temp.GetComponent<LeftArrowScript>();
-							temp1.initialize(currentTime, eTime, false); 
-						}
-						else if (arrows[i] == "UP")
-						{
-							UpArrowScript temp1 = temp.GetComponent<UpArrowScript>();
-							temp1.initialize(currentTime, eTime, false); 
-						}
-						else if (arrows[i] == "RIGHT")
-						{
-							RightArrowScript temp1 = temp.GetComponent<RightArrowScript>();
-							temp1.initialize(currentTime, eTime, false); 
-						}
+						ArrowScript temp1 = temp.GetComponent<ArrowScript>();
+						temp1.initialize(currentTime, eTime, false); 
+						
 					}
 
 					else if (arrows[i].Contains ("HOLD"))
@@ -142,26 +89,8 @@ public class GameManager : MonoBehaviour {
 						if (holdDir == child.name)
 						{
 							GameObject temp = (GameObject)Instantiate(Resources.Load(child.name), child.position, child.rotation);
-							if (holdDir == "DOWN")
-							{
-								DownArrowScript temp1 = temp.GetComponent<DownArrowScript>();
-								temp1.initialize(currentTime, eTime, false, holdDuration);
-							}
-							else if (holdDir == "LEFT")
-							{
-								LeftArrowScript temp1 = temp.GetComponent<LeftArrowScript>();
-								temp1.initialize(currentTime, eTime, false, holdDuration);
-							}
-							else if (holdDir == "UP")
-							{
-								UpArrowScript temp1 = temp.GetComponent<UpArrowScript>();
-								temp1.initialize(currentTime, eTime, false, holdDuration);
-							}
-							else if (holdDir == "RIGHT")
-							{
-								RightArrowScript temp1 = temp.GetComponent<RightArrowScript>();
-								temp1.initialize(currentTime, eTime, false, holdDuration);
-							}
+							ArrowScript temp1 = temp.GetComponent<ArrowScript>();
+							temp1.initialize(currentTime, eTime, false, holdDuration);
 						}
 					}
 				}
